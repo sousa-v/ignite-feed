@@ -3,7 +3,7 @@ interface PostProps {
   content: string;
 }
 
-import styles from "./Post.module.css"
+import styles from "./Post.module.css";
 
 export function Post({ author, content }: PostProps) {
   return (
@@ -28,12 +28,29 @@ export function Post({ author, content }: PostProps) {
 
       <div className={styles.content}>
         <p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem</p>
-          <p>inventore eligendi praesentium, aliquid ipsa exercitationem culpa</p>
-          <p>voluptas dolores <a href="#">aperiam alias</a> distinctio voluptates cupiditate autem</p>
-          <p><a href="#">porro modi animi dignissimos facere ipsam?</a></p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+          </p>
+          <p>
+            inventore eligendi praesentium, aliquid ipsa exercitationem culpa
+          </p>
+          <p>
+            voluptas dolores <a href="#">aperiam alias</a> distinctio voluptates
+            cupiditate autem
+          </p>
+          <p>
+            <a href="#">porro modi animi dignissimos facere ipsam?</a>
+          </p>
         </p>
       </div>
+
+      <form className={styles.commentForm}>
+        <strong>Deixe seu feedback!</strong>
+        <textarea placeholder="Deixe seu comentario" />
+        <footer>
+          <button type="submit">Publicar</button>
+        </footer>
+      </form>
     </article>
   );
 }
