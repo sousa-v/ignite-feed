@@ -1,10 +1,114 @@
 import { Header } from "./components/Header";
 import { Post } from "./components/Post";
-
-import styles from "./App.module.css";
+import { Sidebar } from "./components/Sidebar";
 
 import "./global.css";
-import { Sidebar } from "./components/Sidebar";
+import styles from "./App.module.css";
+
+const posts = [
+  {
+    id: 1,
+    author: {
+      avatarUrl: "https://github.com/sousa-v.png",
+      name: "Victor Sousa",
+      role: "Fullstack Developer",
+    },
+    content: [
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "link",
+        content: "Enim nostrud ",
+      },
+      {
+        type: "link",
+        content: "Enim nostrud ",
+      },
+    ],
+    publishedAt: new Date("2022-09-23 14:15"),
+  },
+  {
+    id: 2,
+    author: {
+      avatarUrl: "https://github.com/maykbrito.png",
+      name: "Mayk Brito",
+      role: "Fullstack Developer",
+    },
+    content: [
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "link",
+        content: "Enim nostrud ",
+      },
+      {
+        type: "link",
+        content: "Enim nostrud ",
+      },
+    ],
+    publishedAt: new Date("2022-09-25 14:15"),
+  },
+  {
+    id: 3,
+    author: {
+      avatarUrl: "https://github.com/diego3g.png",
+      name: "Diego Fernandes",
+      role: "Fullstack Developer",
+    },
+    content: [
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Enim nostrud est consequat anim sit irure consequat consequat irure irure.",
+      },
+      {
+        type: "link",
+        content: "Enim nostrud ",
+      },
+      {
+        type: "link",
+        content: "Enim nostrud ",
+      },
+    ],
+    publishedAt: new Date("2022-09-27 14:15"),
+  },
+];
 
 export function App() {
   return (
@@ -13,18 +117,14 @@ export function App() {
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
-          <Post
-            author="Victor Sousa"
-            content="Voluptate consequat quis enim est ea. Incididunt ipsum tempor est adipisicing. Ex nisi in eiusmod magna quis anim cillum aute nostrud. Adipisicing tempor proident commodo veniam sunt qui magna. Occaecat mollit officia minim occaecat aute proident sit sit culpa ad tempor anim voluptate ut. Fugiat exercitation deserunt eiusmod id dolor irure ea et ut. Duis nostrud sunt consectetur sit mollit eiusmod officia cupidatat excepteur tempor nulla in.
-
-Incididunt aliqua excepteur aute non cupidatat aliqua nisi eu sit duis fugiat non minim do. Laboris veniam id et sunt occaecat cillum id nulla et cillum adipisicing amet reprehenderit. Aute voluptate mollit sint consequat ea esse. Aliqua ullamco Lorem amet elit dolore qui."
-          />
-          <Post
-            author="Victor Sousa"
-            content="Dolore deserunt reprehenderit eu adipisicing aliqua elit. Pariatur eiusmod anim Lorem laboris. Fugiat enim cillum cupidatat tempor laborum culpa. Id Lorem laborum non ut minim mollit tempor incididunt dolore irure do aute.
-
-Sunt do amet Lorem nulla consequat cupidatat exercitation. Amet enim laboris laborum fugiat. Quis in ad cupidatat do. Eiusmod laborum pariatur esse incididunt Lorem voluptate ad mollit eiusmod incididunt."
-          />
+          {posts.map((post) => (
+            <Post
+              key={post.id}
+              author={post.author}
+              content={post.content}
+              publishedAt={post.publishedAt}
+            />
+          ))}
         </main>
       </div>
     </div>
