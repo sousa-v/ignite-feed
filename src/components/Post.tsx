@@ -14,7 +14,7 @@ export function Post({ author, content }: PostProps) {
         <div className={styles.author}>
           <Avatar src="https://github.com/diego3g.png" />
           <div className={styles.authorInfo}>
-            <strong>Victor Sousa</strong>
+            <strong>{author}</strong>
             <span>Developer</span>
           </div>
         </div>
@@ -24,23 +24,7 @@ export function Post({ author, content }: PostProps) {
         </time>
       </header>
 
-      <div className={styles.content}>
-        <p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-          </p>
-          <p>
-            inventore eligendi praesentium, aliquid ipsa exercitationem culpa
-          </p>
-          <p>
-            voluptas dolores <a href="#">aperiam alias</a> distinctio voluptates
-            cupiditate autem
-          </p>
-          <p>
-            <a href="#">porro modi animi dignissimos facere ipsam?</a>
-          </p>
-        </p>
-      </div>
+      <div className={styles.content}>{content}</div>
 
       <form className={styles.commentForm}>
         <strong>Deixe seu feedback!</strong>
