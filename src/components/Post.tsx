@@ -1,5 +1,6 @@
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
@@ -20,6 +21,9 @@ interface PostProps {
 }
 
 export function Post({ author, content, publishedAt }: PostProps) {
+  const [comments, setComments] = useState(["Post muito bacana hein!"]);
+  const [newCommentText, setNewCommentText] = useState("");
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
@@ -32,6 +36,19 @@ export function Post({ author, content, publishedAt }: PostProps) {
     locale: ptBR,
     addSuffix: true,
   });
+
+  function handleCreateNewComment(event: FormEvent<HTMLFormElement>) {
+    event?.preventDefault();
+
+    setComments((comments) => [...comments, newCommentText]);
+    setNewCommentText("");
+  }
+
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    const newComment = event.target.value;
+    setNewCommentText(newComment);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -55,29 +72,37 @@ export function Post({ author, content, publishedAt }: PostProps) {
         {content.map((line) => {
           switch (line.type) {
             case "paragraph":
-              return <p>{line.content}</p>;
+              return <p key={line.content}>{line.content}</p>;
             case "link":
               return (
-                <p>
-                  <a href="#">{line.content}</a>
-                </p>
+                <span key={line.content}>
+                  <a href="#">#{line.content}</a>
+                </span>
               );
           }
         })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form
+        onSubmit={(event) => handleCreateNewComment(event)}
+        className={styles.commentForm}
+      >
         <strong>Deixe seu feedback!</strong>
-        <textarea placeholder="Deixe seu comentario" />
+        <textarea
+          name="comment"
+          value={newCommentText}
+          onChange={(event) => handleNewCommentChange(event)}
+          placeholder="Deixe seu comentario"
+        />
         <footer>
           <button type="submit">Publicar</button>
         </footer>
       </form>
 
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => {
+          return <Comment key={comment} content={comment} />;
+        })}
       </div>
     </article>
   );
