@@ -1,4 +1,4 @@
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from "uuid";
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
@@ -26,7 +26,7 @@ interface PostProps {
 }
 
 interface Comment {
-  id: string
+  id: string;
   date: Date;
   comment: string;
 }
@@ -51,13 +51,13 @@ export function Post({ author, content, publishedAt }: PostProps) {
   function handleCreateNewComment(event: FormEvent) {
     event?.preventDefault();
 
-    const newComment:Comment = {
-       id: uuid(),
-        date: new Date(),
-        comment: newCommentText
-    }
+    const newComment: Comment = {
+      id: uuid(),
+      date: new Date(),
+      comment: newCommentText,
+    };
 
-    setComments((comments) => [...comments, newComment]);
+    setComments((comments) => [newComment, ...comments]);
     setNewCommentText("");
   }
 
