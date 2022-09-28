@@ -1,27 +1,31 @@
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 
 import styles from "./Post.module.css";
 
+interface Author {
+  avatarUrl: string;
+  name: string;
+  role: string;
+}
+
+interface Content {
+  type: "paragraph" | "link"
+  content: string
+}
+
 interface PostProps {
-  author: {
-    avatarUrl: string;
-    name: string;
-    role: string;
-  };
-  content: {
-    type: string;
-    content: string;
-  }[];
+  author: Author
+  content:Content[];
   publishedAt: Date;
 }
 
 export function Post({ author, content, publishedAt }: PostProps) {
-  const [comments, setComments] = useState(["Post muito bacana hein!"]);
+  const [comments, setComments] = useState<string[]>([]);
   const [newCommentText, setNewCommentText] = useState("");
 
   const publishedDateFormatted = format(
@@ -37,7 +41,7 @@ export function Post({ author, content, publishedAt }: PostProps) {
     addSuffix: true,
   });
 
-  function handleCreateNewComment(event: FormEvent<HTMLFormElement>) {
+  function handleCreateNewComment(event: FormEvent) {
     event?.preventDefault();
 
     setComments((comments) => [...comments, newCommentText]);
@@ -50,7 +54,7 @@ export function Post({ author, content, publishedAt }: PostProps) {
     setNewCommentText(newComment);
   }
 
-  function handleNewCommentInvalid(event: ChangeEvent<HTMLTextAreaElement>) {
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("É necessário preencher este campo!");
   }
 
