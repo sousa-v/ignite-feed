@@ -3,13 +3,18 @@ import { Avatar } from "./Avatar";
 import styles from "./Comment.module.css";
 
 interface CommentProps {
-  content: string
+  content: string;
+  onDeleteComment: (comment: string) => void;
 }
 
-export function Comment({content}: CommentProps) {
+export function Comment({ content,onDeleteComment }: CommentProps) {
+  function handleDeleteComment() {
+    onDeleteComment(content)
+  }
+
   return (
     <div className={styles.comment}>
-      <Avatar hasBorder={false}src="https://github.com/sousa-v.png" />
+      <Avatar hasBorder={false} src="https://github.com/sousa-v.png" />
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <header>
@@ -19,14 +24,16 @@ export function Comment({content}: CommentProps) {
                 Cerca de 1h atrás
               </time>
             </div>
-            <button title="Deletar comentário"><Trash size={24}/></button>
+            <button onClick={handleDeleteComment} title="Deletar comentário">
+              <Trash size={24} />
+            </button>
           </header>
-          <p>
-            {content}
-          </p>
+          <p>{content}</p>
         </div>
         <footer>
-          <button><ThumbsUp size={20}/> Aplaudir <span>20</span></button>
+          <button>
+            <ThumbsUp size={20} /> Aplaudir <span>20</span>
+          </button>
         </footer>
       </div>
     </div>
