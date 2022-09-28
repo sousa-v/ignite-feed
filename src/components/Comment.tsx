@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import { useState } from "react";
 import { ThumbsUp, Trash } from "phosphor-react";
 
@@ -5,16 +7,27 @@ import { Avatar } from "./Avatar";
 
 import styles from "./Comment.module.css";
 
+interface Comment {
+  id: string
+  date: Date;
+  comment: string;
+}
+
 interface CommentProps {
-  content: string;
+  comment: Comment
   onDeleteComment: (comment: string) => void;
 }
 
-export function Comment({ content,onDeleteComment }: CommentProps) {
+export function Comment({ comment,onDeleteComment }: CommentProps) {
   const [likeCount, setLikeCount] = useState(0)
 
+  const commentDateRelativetoNow = formatDistanceToNow(comment.date, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
   function handleDeleteComment() {
-    onDeleteComment(content)
+    onDeleteComment(comment.id)
   }
 
   function handleLikeComment(){
@@ -30,14 +43,14 @@ export function Comment({ content,onDeleteComment }: CommentProps) {
             <div className={styles.authorAndTime}>
               <strong>Victor Sousa</strong>
               <time title="26 de Setembro às 16:38" dateTime="2022-09-26 16:38">
-                Cerca de 1h atrás
+                {commentDateRelativetoNow}
               </time>
             </div>
             <button onClick={handleDeleteComment} title="Deletar comentário">
               <Trash size={24} />
             </button>
           </header>
-          <p>{content}</p>
+          <p>{comment.comment}</p>
         </div>
         <footer>
           <button onClick={handleLikeComment}>

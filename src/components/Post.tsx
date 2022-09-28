@@ -1,3 +1,4 @@
+import {v4 as uuid} from 'uuid'
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
@@ -14,18 +15,24 @@ interface Author {
 }
 
 interface Content {
-  type: "paragraph" | "link"
-  content: string
+  type: "paragraph" | "link";
+  content: string;
 }
 
 interface PostProps {
-  author: Author
-  content:Content[];
+  author: Author;
+  content: Content[];
   publishedAt: Date;
 }
 
+interface Comment {
+  id: string
+  date: Date;
+  comment: string;
+}
+
 export function Post({ author, content, publishedAt }: PostProps) {
-  const [comments, setComments] = useState<string[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [newCommentText, setNewCommentText] = useState("");
 
   const publishedDateFormatted = format(
@@ -44,7 +51,13 @@ export function Post({ author, content, publishedAt }: PostProps) {
   function handleCreateNewComment(event: FormEvent) {
     event?.preventDefault();
 
-    setComments((comments) => [...comments, newCommentText]);
+    const newComment:Comment = {
+       id: uuid(),
+        date: new Date(),
+        comment: newCommentText
+    }
+
+    setComments((comments) => [...comments, newComment]);
     setNewCommentText("");
   }
 
@@ -58,9 +71,9 @@ export function Post({ author, content, publishedAt }: PostProps) {
     event.target.setCustomValidity("É necessário preencher este campo!");
   }
 
-  function deleteComment(commentToDelete: string) {
+  function deleteComment(idCommentToDelete: string) {
     const commentsWithoutCommentOne = comments.filter(
-      (comment) => comment !== commentToDelete
+      (comment) => comment.id !== idCommentToDelete
     );
     setComments(commentsWithoutCommentOne);
   }
@@ -125,8 +138,8 @@ export function Post({ author, content, publishedAt }: PostProps) {
         {comments.map((comment) => {
           return (
             <Comment
-              key={comment}
-              content={comment}
+              key={comment.id}
+              comment={comment}
               onDeleteComment={deleteComment}
             />
           );
