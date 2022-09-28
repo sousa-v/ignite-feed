@@ -45,8 +45,13 @@ export function Post({ author, content, publishedAt }: PostProps) {
   }
 
   function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    event.target.setCustomValidity("");
     const newComment = event.target.value;
     setNewCommentText(newComment);
+  }
+
+  function handleNewCommentInvalid(event: ChangeEvent<HTMLTextAreaElement>) {
+    event.target.setCustomValidity("É necessário preencher este campo!");
   }
 
   function deleteComment(commentToDelete: string) {
@@ -55,6 +60,8 @@ export function Post({ author, content, publishedAt }: PostProps) {
     );
     setComments(commentsWithoutCommentOne);
   }
+
+  const isNewCommentEmpty = newCommentText.length === 0;
 
   return (
     <article className={styles.post}>
@@ -100,9 +107,13 @@ export function Post({ author, content, publishedAt }: PostProps) {
           value={newCommentText}
           onChange={(event) => handleNewCommentChange(event)}
           placeholder="Deixe seu comentario"
+          onInvalid={handleNewCommentInvalid}
+          required
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={isNewCommentEmpty}>
+            Publicar
+          </button>
         </footer>
       </form>
 
