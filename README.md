@@ -1,1 +1,1 @@
-![Ignite Timer](./.github/ignite-feed.png)
+![Ignite Feed](./.github/ignite-feed.png)
